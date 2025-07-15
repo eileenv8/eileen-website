@@ -1,7 +1,6 @@
 import {createClient} from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
-// Replace 'xiewvvsd' with your actual project ID if different
 export const client = createClient({
   projectId: 'uvdkkjro',
   dataset: 'production',
@@ -101,7 +100,7 @@ export const getFileLibrary = () => {
 
 export const getFeaturedFiles = () => {
   return client.fetch(`
-    *[_type == "fileLibrary" && featured == true] | order(rating d                                       esc) {
+    *[_type == "fileLibrary" && featured == true] | order(dateAdded desc) {                                      esc) {
       title,
       slug,
       file,
