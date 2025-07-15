@@ -1,5 +1,6 @@
-import { getBlogPosts, getFeaturedPhotos, getFeaturedFiles } from '../lib/sanity'
+import { getBlogPosts, getFeaturedPhotos } from '../lib/sanity'
 import { urlFor } from '../lib/sanity'
+import { formatDate } from '../lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -7,7 +8,6 @@ export default async function Home() {
   // Fetch data from Sanity
   const blogPosts = await getBlogPosts()
   const featuredPhotos = await getFeaturedPhotos()
-  const featuredFiles = await getFeaturedFiles()
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -56,7 +56,7 @@ export default async function Home() {
                       <p className="text-gray-600 mb-3">{post.excerpt}</p>
                     )}
                     <div className="text-sm text-gray-500">
-                      {new Date(post.publishedAt).toLocaleDateString()}
+                      {formatDate(post.publishedAt)}
                     </div>
                   </div>
                 </article>
@@ -92,32 +92,6 @@ export default async function Home() {
                       )}
                     </div>
                   )}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Featured Documents */}
-        {featuredFiles.length > 0 && (
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Documents</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {featuredFiles.slice(0, 4).map((file) => (
-                <div key={file._id} className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{file.title}</h3>
-                  {file.author && (
-                    <p className="text-sm text-gray-600 mb-2">by {file.author}</p>
-                  )}
-                  {file.description && (
-                    <p className="text-gray-700 mb-3">{file.description}</p>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500 capitalize">{file.category}</span>
-                    {file.rating && (
-                      <span className="text-sm">{'⭐'.repeat(file.rating)}</span>
-                    )}
-                  </div>
                 </div>
               ))}
             </div>
