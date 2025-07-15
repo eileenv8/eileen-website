@@ -14,7 +14,7 @@ export default async function Home() {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">Eileen's Website</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Eileen&apos;s Website</h1>
           <nav className="mt-4">
             <div className="flex space-x-8">
               <Link href="/" className="text-gray-900 hover:text-gray-600">Home</Link>

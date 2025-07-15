@@ -101,7 +101,7 @@ export const getFileLibrary = () => {
 
 export const getFeaturedFiles = () => {
   return client.fetch(`
-    *[_type == "fileLibrary" && featured == true] | order(rating desc) {
+    *[_type == "fileLibrary" && featured == true] | order(rating d                                       esc) {
       title,
       slug,
       file,
@@ -112,4 +112,4 @@ export const getFeaturedFiles = () => {
       _id
     }
   `)
-}
+} 
