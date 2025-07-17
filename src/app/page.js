@@ -1,6 +1,5 @@
 import { getBlogPosts, getFeaturedPhotos } from '../lib/sanity'
 import { urlFor } from '../lib/sanity'
-import { formatDate } from '../lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -56,7 +55,7 @@ export default async function Home() {
                       <p className="text-gray-600 mb-3">{post.excerpt}</p>
                     )}
                     <div className="text-sm text-gray-500">
-                      {formatDate(post.publishedAt)}
+                      {new Date(post.publishedAt).toLocaleDateString()}
                     </div>
                   </div>
                 </article>
