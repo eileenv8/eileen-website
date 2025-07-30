@@ -112,3 +112,18 @@ export const getFeaturedFiles = () => {
     }
   `)
 } 
+
+export const getAboutMe = () => {
+  return client.fetch(`
+    *[_type == "aboutMe"][0] {
+      title,
+      profileImage,
+      bio,
+      highlights,
+      location,
+      currentProject,
+      contactEmail,
+      socialLinks
+    }
+  `)
+}
