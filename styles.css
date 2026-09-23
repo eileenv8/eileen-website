@@ -109,9 +109,9 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: radial-gradient(120% 80% at 20% 50%,
-    color-mix(in srgb, var(--paper) 92%, transparent) 0%,
-    color-mix(in srgb, var(--paper) 55%, transparent) 55%,
+  background: radial-gradient(75% 70% at 14% 48%,
+    color-mix(in srgb, var(--paper) 90%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 40%, transparent) 60%,
     transparent 100%);
   pointer-events: none;
 }
