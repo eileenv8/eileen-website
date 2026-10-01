@@ -28,7 +28,8 @@ To change colors or spacing, edit the variables at the top of `styles.css`.
 
 To change the About image, put your picture in the `images` folder, then in
 `index.html` find the comment that says `ABOUT IMAGE` and change the `src` on
-the line below it to your file's name (for example `images/my-picture.jpg`).
+the line below it to your file's name (for example `images/my-picture.jpg`),
+and set `width` and `height` to the picture's size in pixels.
 Keep files under about 500KB so the page stays fast; a JPG around 1200px tall
 is plenty.
 

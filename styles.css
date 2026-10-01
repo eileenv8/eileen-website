@@ -183,12 +183,9 @@ p:last-child { margin-bottom: 0; }
 
 /* about: text beside an image; the image drops below the text on phones */
 .about { display: grid; gap: 2.5rem 4rem; align-items: start; }
-@media (min-width: 48rem) { .about { grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); } }
-.about__image { margin: 0; max-width: 20rem; }
-.about__image img {
-  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
-  border-radius: 3px; background: var(--paper-warm);
-}
+@media (min-width: 48rem) { .about { grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); } }
+.about__image { margin: 0; max-width: 26rem; }
+.about__image img { display: block; width: 100%; height: auto; }
 
 /* sprints */
 
