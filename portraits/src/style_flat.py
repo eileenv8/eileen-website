@@ -132,6 +132,10 @@ def golden_hour(animated=False):
 
 # ---------------------------------------------------------------- detailed
 
+HAIR_BACK_LOW = P["hair_back"].replace("M300,128 C215,128 165,185 156,262", "M300,174 C236,168 170,190 156,262").replace(
+    "C435,185 385,128 300,128 Z", "C430,190 364,168 300,174 Z")
+
+
 def chain_links(d, every=5.2):
     pts = sample(d, step=every)
     out = []
@@ -292,7 +296,7 @@ def detailed(animated=False):
   <circle cx="470" cy="150" r="44" fill="none" stroke="#C4552C" stroke-width="1.2" opacity="0.35" stroke-dasharray="2 6"/>
 
   <!-- hair behind -->
-  <path fill="url(#hairBackG)" d="{P['hair_back']}"/>
+  <path fill="url(#hairBackG)" d="{HAIR_BACK_LOW}"/>
 
   <!-- neck and chest -->
   <path fill="url(#neckG)" d="{P['neck']}"/>
@@ -325,7 +329,8 @@ def detailed(animated=False):
   <circle cx="300" cy="732" r="5.5" fill="#F6F2EA" stroke="#94A8BF" stroke-width="1.4"/>
   <circle cx="298.4" cy="732" r="0.9" fill="#94A8BF"/><circle cx="301.6" cy="732" r="0.9" fill="#94A8BF"/>
 
-  <!-- necklace -->
+  <!-- necklace, sitting 6px lower -->
+  <g transform="translate(0,6)">
   <g fill="none" stroke="#5F5A52" stroke-width="1.3">{chain_links(P['chain_l'])}{chain_links(P['chain_r'])}</g>
   <circle cx="303" cy="645" r="5.5" fill="none" stroke="#6F6A62" stroke-width="2.6"/>
   <circle cx="303" cy="645" r="5.5" fill="none" stroke="#C9C4BA" stroke-width="0.8"/>
@@ -333,6 +338,8 @@ def detailed(animated=False):
   <path fill="url(#stoneG)" d="{P['pendant']}"/>
   <path d="M303,651 L303,704 M296,668 L310,668" stroke="#1D4537" stroke-width="0.7" opacity="0.5"/>
   <path fill="#A9D4BA" d="{P['pendant_hi']}" opacity="0.55"/>
+
+  </g>
 
   <!-- face -->
   <path fill="url(#skinG)" d="{P['face']}"/>
@@ -404,7 +411,6 @@ def detailed(animated=False):
     <path d="M298,178 C262,180 232,200 216,250"/><path d="M296,184 C270,188 244,206 226,244"/>
     <path d="M302,178 C338,180 368,200 384,250"/><path d="M304,184 C330,188 356,206 374,244"/>
   </g>
-  <g class="fly" fill="none" stroke="#A86E45" stroke-width="0.9" stroke-linecap="round" opacity="0.5">{fly}</g>
 
   <rect width="{W}" height="{H}" filter="url(#grain)" fill="#000"/>
 </svg>
