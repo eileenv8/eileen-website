@@ -9,6 +9,7 @@ Ten illustrated portraits of Eileen, all drawn as code from one shared set of sh
 | `01-golden-hour.svg` | Flat vector | `-animated` blinks, sways, sun breathes |
 | `02-golden-hour-detailed.svg` | Detailed flat vector | `-animated` adds drifting fog |
 | `02a`–`02d` | Detailed, new angles | three-quarter (both sides), head tilt, turn and tilt; made by `src/angles.py` |
+| `02e-detailed-tilt-animated.svg` | Detailed, head tilting side to side | 11-second loop; `02e-detailed-tilt.mp4` is the same loop as video, for social posts. Made by `src/tilt_anim.py` |
 | `03-pencil-sketch.svg` | Pencil, black and white | |
 | `04-gestural-ink.svg` | Brush ink + watercolor | |
 | `05-one-line.svg` | Single continuous line | `-animated` draws itself |
@@ -44,6 +45,9 @@ python3 style_more.py          # 06, 07, 08
 python3 style_paper.py         # 09
 python3 style_gen.py           # 10
 python3 angles.py              # 02a-02d: the detailed portrait at new angles
+python3 tilt_anim.py           # 02e: animated head tilt
+# video: node frames.js out/02e-detailed-tilt-animated.svg frames 24 11, then
+# ffmpeg -framerate 24 -i frames/f%04d.png -c:v libx264 -pix_fmt yuv420p out/02e-detailed-tilt.mp4
 ```
 
 Edit a shape once in `geo.py` (say, the brow arch) and every style picks it up.
