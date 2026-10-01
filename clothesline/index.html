@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clothesline SF</title>
+<meta name="description" content="Color and body-line styling in San Francisco. Find what suits you, then build a closet of fewer, better things: secondhand first, natural fibers second.">
+<link rel="canonical" href="https://eileen.jubil.ee/clothesline/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Clothesline SF — Dress for the singularity">
+<meta property="og:description" content="Color and body-line styling in San Francisco. Secondhand first, natural fibers second.">
+<meta property="og:url" content="https://eileen.jubil.ee/clothesline/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M2 9 Q16 15 30 9' stroke='%231F2A44' stroke-width='2' fill='none'/><path d='M10 11 h12 l3 4 -3 2 v11 h-12 v-11 l-3 -2z' fill='%23C2571A'/></svg>">
+<style>
+/* Layout: a single long scroll. A clothesline runs across the top like a shop sign;
+   below it, sections read like the tags on a garment: plain facts, set in mono. */
+:root {
+  --fog:      #E8EBEA;   /* page: the colour of a Sunset-district morning */
+  --fog-2:    #DCE1E0;
+  --ecru:     #F5F0E6;   /* cards: undyed cotton */
+  --indigo:   #1F2A44;   /* ink: Japanese denim */
+  --indigo-2: #45506A;
+  --muted:    #6A7183;
+  --rule:     #C9CFCF;
+  --rust:     #C2571A;   /* one accent, used sparingly */
+  --rope:     #8C7A62;
+
+  --display: "Gloock", "Bodoni 72", Didot, Georgia, serif;
+  --body: "Hanken Grotesk", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  --measure: 36rem;
+  --wide: 72rem;
+  --step: clamp(4rem, 9vw, 7rem);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --fog: #141A26; --fog-2: #1B2232; --ecru: #212938; --indigo: #ECE7DC; --indigo-2: #C9C6BD;
+  --muted: #9AA0AE; --rule: #333C4E; --rust: #E2804A; --rope: #A8957A; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --fog: #141A26; --fog-2: #1B2232; --ecru: #212938; --indigo: #ECE7DC; --indigo-2: #C9C6BD;
+  --muted: #9AA0AE; --rule: #333C4E; --rust: #E2804A; --rope: #A8957A; color-scheme: dark }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--fog); color: var(--indigo);
+  font: 400 1.0625rem/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { width: min(100% - 2.5rem, var(--wide)); margin-inline: auto; }
+a { color: inherit; text-underline-offset: .22em; text-decoration-color: var(--rule); }
+a:hover { color: var(--rust); text-decoration-color: var(--rust); }
+:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+
+/* ---------- nav ---------- */
+.nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--fog) 88%, transparent); backdrop-filter: blur(8px); }
+.nav__inner { display: flex; align-items: baseline; gap: 1.5rem; padding-block: .9rem; }
+.wordmark { font: 400 1.35rem/1 var(--display); text-decoration: none; margin-right: auto; letter-spacing: -.01em; }
+.wordmark span { font: 500 .7rem/1 var(--mono); letter-spacing: .12em; color: var(--rust); margin-left: .35rem; vertical-align: .35em; }
+.nav ul { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; list-style: none; margin: 0; padding: 0; font: 500 .8rem/1 var(--mono); letter-spacing: .04em; text-transform: lowercase; }
+.nav ul a { text-decoration: none; color: var(--indigo-2); }
+@media (max-width: 36rem) { .nav__inner { flex-wrap: wrap; gap: .6rem 1rem; } .wordmark { width: 100%; } }
+
+/* ---------- hero ---------- */
+.hero { padding-top: clamp(1rem, 3vw, 2rem); }
+.line-art { display: block; width: 100%; height: clamp(220px, 30.5vw, 380px); }
+.hero__text { padding-block: 1rem var(--step); display: grid; gap: 1.4rem; }
+h1 {
+  font: 400 clamp(2.6rem, 8vw, 6.2rem)/.98 var(--display); letter-spacing: -.025em; margin: 0;
+  text-wrap: balance;
+}
+.rot { display: inline-block; color: var(--rust); min-width: 4ch; }
+.rot.swap { animation: swap .5s ease; }
+@keyframes swap { from { opacity: 0; transform: translateY(.25em); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .rot.swap { animation: none; } }
+.lede { font-size: clamp(1.1rem, 2vw, 1.3rem); max-width: 34ch; margin: 0; color: var(--indigo-2); }
+.ctas { display: flex; flex-wrap: wrap; gap: .75rem; }
+.btn {
+  font: 500 .95rem/1 var(--body); text-decoration: none; padding: .9rem 1.3rem; border-radius: 999px;
+  border: 1.5px solid var(--indigo); background: var(--indigo); color: var(--fog);
+}
+.btn:hover { background: var(--rust); border-color: var(--rust); color: #fff; }
+.btn--ghost { background: transparent; color: var(--indigo); }
+.btn--ghost:hover { background: transparent; color: var(--rust); }
+
+/* ---------- section scaffolding ---------- */
+section { padding-block: var(--step); border-top: 1px solid var(--rule); }
+.eyebrow { font: 500 .74rem/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--rust); margin: 0 0 1.25rem; }
+h2 { font: 400 clamp(2rem, 4.6vw, 3.3rem)/1.05 var(--display); letter-spacing: -.02em; margin: 0 0 1.25rem; text-wrap: balance; max-width: 18ch; }
+h3 { font: 600 1.15rem/1.3 var(--body); margin: 0 0 .4rem; }
+p { margin: 0 0 1rem; }
+.prose { max-width: var(--measure); color: var(--indigo-2); }
+
+/* ---------- how it works ---------- */
+.steps { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: 2rem 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); counter-reset: step; }
+.steps li { display: grid; gap: .8rem; align-content: start; min-width: 0; }
+.steps svg { width: 100%; max-width: 15rem; height: 7.5rem; color: var(--indigo); }
+.steps .n { font: 500 .78rem/1 var(--mono); color: var(--muted); letter-spacing: .08em; }
+.steps p { color: var(--indigo-2); margin: 0; }
+
+/* ---------- seasons ---------- */
+.season-head { display: grid; gap: 1rem 3rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); align-items: end; }
+.families { display: grid; gap: 1.5rem; margin-top: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr)); }
+.family h3 { font: 500 .78rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 .7rem; }
+.family ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; }
+.season {
+  width: 100%; display: grid; grid-template-columns: 7.5rem 1fr; align-items: center; gap: .75rem;
+  font: 500 .95rem/1.2 var(--body); color: var(--indigo); text-align: left;
+  background: transparent; border: 1px solid transparent; border-radius: 10px; padding: .45rem .55rem; cursor: pointer;
+}
+.season:hover { border-color: var(--rule); }
+.season[aria-pressed="true"] { background: var(--ecru); border-color: var(--indigo); }
+.chips { display: flex; height: 1.3rem; border-radius: 4px; overflow: hidden; outline: 1px solid color-mix(in srgb, var(--indigo) 12%, transparent); }
+.chips i { flex: 1; }
+.season-note { font: 400 .85rem/1.5 var(--mono); color: var(--muted); margin-top: 1.5rem; }
+.season-note button { font: inherit; color: var(--indigo); background: none; border: 0; padding: 0; text-decoration: underline; text-decoration-color: var(--rust); text-underline-offset: .2em; cursor: pointer; }
+
+/* ---------- services ---------- */
+.menu { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 0 3rem; }
+.item { display: grid; grid-template-columns: 1fr auto; gap: .2rem 1rem; padding-block: 1.25rem; border-top: 1px solid var(--rule); min-width: 0; }
+.item h3 { margin: 0; }
+.price { font: 400 1.6rem/1 var(--display); letter-spacing: -.01em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.price small { font: 500 .78rem/1 var(--mono); color: var(--muted); margin-left: .2rem; }
+.item p { grid-column: 1 / -1; margin: 0; color: var(--indigo-2); font-size: .97rem; }
+.item .meta { grid-column: 1 / -1; font: 400 .8rem/1.4 var(--mono); color: var(--muted); }
+.fine { font: 400 .85rem/1.5 var(--mono); color: var(--muted); margin-top: 1.5rem; max-width: 52rem; }
+
+/* ---------- closet loop ---------- */
+.loop { display: grid; gap: 2.5rem 4rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); align-items: center; margin-top: 2rem; }
+.loop svg { width: 100%; height: auto; max-width: 30rem; color: var(--indigo); }
+.splits { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.split { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; align-items: baseline; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.split b { font: 400 1.7rem/1 var(--display); font-weight: 400; }
+.split span { color: var(--indigo-2); font-size: .97rem; }
+
+/* hang tags: a detail only this business has */
+.tags { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 2.5rem; }
+.tag {
+  position: relative; width: 13.5rem; max-width: 100%; padding: 1.4rem 1.1rem 1rem; background: var(--ecru);
+  border-radius: 6px 6px 6px 6px; font: 400 .8rem/1.55 var(--mono); color: var(--indigo);
+  clip-path: polygon(14% 0, 86% 0, 100% 12%, 100% 100%, 0 100%, 0 12%);
+  transform: rotate(var(--r, -1.5deg));
+}
+.tag::before { content: ""; position: absolute; top: .55rem; left: 50%; width: .55rem; height: .55rem; margin-left: -.275rem; border-radius: 50%; background: var(--fog); box-shadow: inset 0 0 0 1.5px var(--rope); }
+.tag dl { margin: .4rem 0 0; display: grid; grid-template-columns: auto 1fr; gap: .1rem .8rem; }
+.tag dt { color: var(--muted); }
+.tag dd { margin: 0; }
+.tag .what { font: 600 .95rem/1.3 var(--body); }
+.tag .sw { display: inline-block; width: .8em; height: .8em; border-radius: 2px; vertical-align: -.08em; margin-right: .35em; }
+.tag-note { font: 400 .8rem/1.4 var(--mono); color: var(--muted); margin-top: 1rem; }
+
+/* ---------- lines (slogans) ---------- */
+.lines { list-style: none; padding: 0; margin: 0; display: grid; gap: .2rem; }
+.lines li { font: 400 clamp(1.6rem, 4vw, 2.8rem)/1.15 var(--display); letter-spacing: -.015em; }
+.lines li:nth-child(2) { padding-left: clamp(1rem, 8vw, 7rem); color: var(--indigo-2); }
+.lines li:nth-child(3) { padding-left: clamp(2rem, 16vw, 14rem); }
+.lines li:nth-child(4) { padding-left: clamp(1rem, 8vw, 7rem); color: var(--indigo-2); }
+
+/* ---------- about / book ---------- */
+.two { display: grid; gap: 2rem 4rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+.book { background: var(--indigo); color: var(--fog); border-radius: 14px; padding: clamp(1.5rem, 4vw, 2.75rem); display: grid; gap: 1rem; align-content: start; }
+.book h2 { color: var(--fog); margin: 0; }
+.book p { color: color-mix(in srgb, var(--fog) 82%, transparent); margin: 0; }
+.mail { font: 400 clamp(1.3rem, 3vw, 1.8rem)/1.2 var(--display); color: var(--fog); text-decoration-color: var(--rust); overflow-wrap: anywhere; }
+.book .btn { background: var(--fog); color: var(--indigo); border-color: var(--fog); justify-self: start; }
+.book .btn:hover { background: var(--rust); border-color: var(--rust); color: #fff; }
+.copy { font: 500 .8rem/1 var(--mono); color: var(--fog); background: transparent; border: 1px solid color-mix(in srgb, var(--fog) 40%, transparent); border-radius: 999px; padding: .55rem .9rem; cursor: pointer; justify-self: start; }
+
+footer { padding-block: 2.5rem 3.5rem; border-top: 1px solid var(--rule); font: 400 .8rem/1.6 var(--mono); color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: .5rem 2rem; justify-content: space-between; }
+
+/* ---------- the clothesline itself ---------- */
+.garment { transform-box: fill-box; }
+.sway { animation: sway var(--d, 6s) ease-in-out var(--delay, 0s) infinite alternate; transform-origin: var(--ox) var(--oy); }
+@keyframes sway { from { transform: rotate(calc(var(--amp, 2deg) * -1)); } to { transform: rotate(var(--amp, 2deg)); } }
+.fill { transition: fill .7s ease; }
+@media (prefers-reduced-motion: reduce) { .sway { animation: none; } .fill { transition: none; } }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap nav__inner">
+    <a class="wordmark" href="#top">Clothesline<span>SF</span></a>
+    <ul>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#seasons">Seasons</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#loop">Closet loop</a></li>
+      <li><a href="#book">Book</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <svg class="line-art" id="line" viewBox="0 0 1200 370" preserveAspectRatio="xMidYMin slice" role="img" aria-labelledby="line-title">
+    <title id="line-title">A clothesline of secondhand and natural-fiber clothes, coloured by season</title>
+    <defs>
+      <!-- riso-style halftone shading laid over each garment -->
+      <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(18)">
+        <circle cx="3" cy="3" r="1.4" fill="#1F2A44" opacity=".35"/>
+      </pattern>
+      <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">
+        <stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="1"/>
+      </linearGradient>
+      <mask id="shadeMask" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#shade)"/></mask>
+    </defs>
+    <path id="rope" d="M-20,58 Q600,150 1220,58" fill="none" stroke="var(--rope)" stroke-width="2.5"/>
+    <g id="garments"></g>
+  </svg>
+  <div class="wrap hero__text">
+    <h1>Dress for <span class="rot" id="rot" aria-live="off">the singularity</span>.</h1>
+    <p class="lede">Color and body-line styling in San Francisco. Find what suits you, then build a closet of fewer, better things.</p>
+    <div class="ctas">
+      <a class="btn" href="#book">Host a color party</a>
+      <a class="btn btn--ghost" href="#services">See sessions and prices</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>Find your colors and your lines, then build a closet that lasts.</h2>
+    <p class="prose">Most color analysts stop at the palette. Most stylists skip the analysis. We do both, then help you shop it: your own closet first, secondhand second, and a short list of natural-fiber makers last.</p>
+    <ol class="steps">
+      <li>
+        <svg viewBox="0 0 240 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- a fan of fabric drapes held under a chin -->
+          <path d="M120,26 C108,26 100,36 100,48 C100,62 110,72 120,72 C130,72 140,62 140,48 C140,36 132,26 120,26"/>
+          <path d="M112,48 l3,0 M125,48 l3,0 M115,60 Q120,63 125,60"/>
+          <path d="M70,118 L100,74 L140,74 L170,118" />
+          <path d="M60,118 Q85,90 102,78" stroke="#C2571A" stroke-width="7" opacity=".85"/>
+          <path d="M180,118 Q155,90 138,78" stroke="#2F6D62" stroke-width="7" opacity=".85"/>
+          <path d="M88,118 Q100,96 110,80" stroke="#D9A13B" stroke-width="7" opacity=".85"/>
+          <path d="M152,118 Q140,96 130,80" stroke="#8E7FB8" stroke-width="7" opacity=".85"/>
+        </svg>
+        <span class="n">Step 1</span>
+        <h3>Find your colors</h3>
+        <p>We hold fabric drapes to your face in daylight and watch what your skin does. You leave with your season and a palette card.</p>
+      </li>
+      <li>
+        <svg viewBox="0 0 240 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- one continuous line: a figure and the lines of her silhouette -->
+          <path d="M120,10 C110,10 106,18 106,24 C106,32 112,38 120,38 C128,38 134,32 134,24 C134,18 130,10 120,10 M120,38 L120,46 C100,48 94,58 96,70 C98,84 104,88 104,96 C104,104 98,108 100,118 M120,46 C140,48 146,58 144,70 C142,84 136,88 136,96 C136,104 142,108 140,118"/>
+          <path d="M70,40 Q60,80 74,118" stroke-dasharray="3 5" opacity=".6"/>
+          <path d="M170,40 Q180,80 166,118" stroke-dasharray="3 5" opacity=".6"/>
+        </svg>
+        <span class="n">Step 2</span>
+        <h3>Find your lines</h3>
+        <p>A body-line read: the shapes, fabrics, and proportions that sit right on your frame, written up as a style guide you keep.</p>
+      </li>
+      <li>
+        <svg viewBox="0 0 240 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- a rail with a few hangers: fewer, better -->
+          <path d="M30,24 L210,24"/>
+          <path d="M70,24 q0,-8 6,-8 q6,0 6,6 q0,6 -6,8 l-26,16 l52,0 l-26,-16"/>
+          <path d="M50,46 L50,112 L102,112 L102,46" fill="#1F2A44" fill-opacity=".85" stroke="none"/>
+          <path d="M140,24 q0,-8 6,-8 q6,0 6,6 q0,6 -6,8 l-26,16 l52,0 l-26,-16"/>
+          <path d="M122,46 L118,112 L174,112 L170,46" fill="#C9A27E" stroke="none"/>
+          <path d="M58,100 L94,100" stroke="#F5F0E6" stroke-dasharray="2 3" stroke-width="1.5"/>
+        </svg>
+        <span class="n">Step 3</span>
+        <h3>Build the closet</h3>
+        <p>A closet edit at home, then a shop-along through the Mission and Haight with a list matched to your palette and lines.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="seasons">
+  <div class="wrap">
+    <div class="season-head">
+      <div>
+        <p class="eyebrow">Twelve seasons</p>
+        <h2>Know your season. San Francisco has all four by noon.</h2>
+      </div>
+      <p class="prose">Color analysis sorts people into twelve seasons by how warm, deep, and clear their coloring is. Tap one to hang its palette on the line above.</p>
+    </div>
+    <div class="families" id="families"></div>
+    <p class="season-note">Showing: <span id="current">a mixed line, like every closet we've ever edited</span>. <button type="button" id="mix">Mix it back up</button></p>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <p class="eyebrow">Sessions</p>
+    <h2>Start with a party. Go as deep as you like.</h2>
+    <div class="menu">
+      <div class="item">
+        <h3>Color Party</h3><span class="price">$95<small>/person</small></span>
+        <p>Four to six friends, an intro to the seasons, every guest draped, a palette card each.</p>
+        <span class="meta">1.5–2 hrs · your place or ours</span>
+      </div>
+      <div class="item">
+        <h3>Color Session</h3><span class="price">$225</span>
+        <p>Full one-on-one drape, your twelve-season result, a palette card, and makeup and hair-color notes.</p>
+        <span class="meta">1.5 hrs · 1:1</span>
+      </div>
+      <div class="item">
+        <h3>Signature Session</h3><span class="price">$375</span>
+        <p>Color session plus a body-line read and a written style guide: shapes, fabrics, and a starter capsule list.</p>
+        <span class="meta">3 hrs · 1:1</span>
+      </div>
+      <div class="item">
+        <h3>Closet Edit</h3><span class="price">$300</span>
+        <p>In your home: keep, tailor, sell, or donate. Outfits from what you already own, and a short gap list.</p>
+        <span class="meta">3 hrs · at home</span>
+      </div>
+      <div class="item">
+        <h3>Secondhand Shop-Along</h3><span class="price">$85<small>/hr</small></span>
+        <p>A guided tour of thrift and resale shops, matched to your palette and lines.</p>
+        <span class="meta">2–3 hrs · Mission, Haight, and beyond</span>
+      </div>
+      <div class="item">
+        <h3>Full Wardrobe</h3><span class="price">$750</span>
+        <p>Signature session, closet edit, and shop-along, with a check-in 30 days later.</p>
+        <span class="meta">3 sessions</span>
+      </div>
+    </div>
+    <p class="fine">Founding prices for our first 25 clients. Host a party of five and your own session is free. Body-line typing is Kibbe-inspired; we're not affiliated with David Kibbe.</p>
+  </div>
+</section>
+
+<section id="loop">
+  <div class="wrap">
+    <p class="eyebrow">Closet to closet</p>
+    <h2>What leaves your closet can be someone else's best find.</h2>
+    <div class="loop">
+      <svg viewBox="0 0 480 400" overflow="visible" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="loop-title">
+        <title id="loop-title">The closet loop: closet edit, tag, consign or credit, match, worn again</title>
+        <ellipse cx="240" cy="202" rx="178" ry="154" stroke-width="2" stroke-dasharray="2 9" opacity=".55"/>
+        <path d="M340,81 L350,81 L346,71" stroke-width="2"/>
+        <path d="M406,240 L409,250 L418,244" stroke-width="2"/>
+        <path d="M248,350 L240,356 L248,362" stroke-width="2"/>
+        <path d="M80,257 L72,252 L69,262" stroke-width="2"/>
+        <path d="M129,88 L133,79 L123,78" stroke-width="2"/>
+        <g font-family="IBM Plex Mono, monospace" font-size="13" fill="currentColor" stroke="none">
+          <circle cx="240" cy="48" r="7" fill="#C2571A"/><text x="240" y="30" text-anchor="middle">closet edit</text>
+          <circle cx="412" cy="162" r="7" fill="#C2571A"/><text x="416" y="146" text-anchor="end">tag it</text>
+          <circle cx="350" cy="323" r="7" fill="#C2571A"/><text x="350" y="386" text-anchor="middle">consign · credit</text>
+          <circle cx="130" cy="323" r="7" fill="#C2571A"/><text x="130" y="386" text-anchor="middle">matched rack</text>
+          <circle cx="68" cy="162" r="7" fill="#C2571A"/><text x="64" y="188" text-anchor="start">worn again</text>
+        </g>
+        <g font-family="Gloock, Georgia, serif" font-size="26" fill="currentColor" stroke="none" text-anchor="middle">
+          <text x="240" y="198">fewer clothes</text><text x="240" y="228">to landfill</text>
+        </g>
+      </svg>
+      <div>
+        <p class="prose">During a closet edit, you choose what to let go. Good pieces in natural fibers get tagged by season, body line, size, and fiber, so a Soft Autumn client shops a rack that's already edited for her. After 90 days, anything unsold comes back to you or goes to donation, whichever you picked.</p>
+        <div class="splits">
+          <div class="split"><b>40%</b><span><strong>Consign for cash.</strong> Best for Japanese denim, wool coats, and designer pieces.</span></div>
+          <div class="split"><b>50%</b><span><strong>Closet credit.</strong> Spend it on sessions or the rack.</span></div>
+          <div class="split"><b>Free</b><span><strong>Donate.</strong> We haul it away and hand you the receipt.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tags" aria-label="Example hang tags">
+      <div class="tag" style="--r:-2deg"><span class="what">Selvedge jeans</span>
+        <dl><dt>season</dt><dd><i class="sw" style="background:#1F2A44"></i>Deep Winter</dd><dt>line</dt><dd>straight, high rise</dd><dt>size</dt><dd>28</dd><dt>fiber</dt><dd>100% cotton, Japan</dd></dl></div>
+      <div class="tag" style="--r:1.5deg"><span class="what">Linen overshirt</span>
+        <dl><dt>season</dt><dd><i class="sw" style="background:#C9A27E"></i>Soft Autumn</dd><dt>line</dt><dd>relaxed, dropped shoulder</dd><dt>size</dt><dd>M</dd><dt>fiber</dt><dd>100% linen</dd></dl></div>
+      <div class="tag" style="--r:-.8deg"><span class="what">Lambswool crew</span>
+        <dl><dt>season</dt><dd><i class="sw" style="background:#7FA7A1"></i>True Summer</dd><dt>line</dt><dd>fitted, rib hem</dd><dt>size</dt><dd>S</dd><dt>fiber</dt><dd>lambswool</dd></dl></div>
+    </div>
+    <p class="tag-note">Example tags. The rack opens with our first closet edits.</p>
+  </div>
+</section>
+
+<section aria-label="What we believe">
+  <div class="wrap">
+    <ul class="lines">
+      <li>Natural fibers for an artificial age.</li>
+      <li>Hand-picked, not algorithm-picked.</li>
+      <li>Your colors, not the fog's.</li>
+      <li>Refactor your closet.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap two">
+    <div>
+      <p class="eyebrow">Who we are</p>
+      <h2>Eileen and Ashley, two friends in San Francisco.</h2>
+      <div class="prose">
+        <p>We'd rather teach you what suits you than sell you more clothes. Clients should leave able to shop on their own.</p>
+        <p>Eileen has spent years bringing people together, from <a href="/">Jubilee Studio</a> to community workspaces and a regenerative farm. Ashley had the idea that started the closet loop: clothes leaving one closet should find the next person they suit.</p>
+      </div>
+    </div>
+    <div class="book">
+      <p class="eyebrow" style="color:var(--fog);opacity:.7">Book</p>
+      <h2>Opening December 2026.</h2>
+      <p>We're running free pilot color parties with friends this November. Want to host one, or get on the list for founding sessions? Write to us.</p>
+      <a class="mail" href="mailto:eileen@jubil.ee?subject=Clothesline%20color%20party">eileen@jubil.ee</a>
+      <button type="button" class="copy" id="copy">Copy email</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Clothesline SF · San Francisco</span>
+    <span>Secondhand first. Natural fibers second. Fewer, better things.</span>
+  </div>
+</footer>
+
+<script>
+// ---------- palettes: six colours per season, warm to cool ----------
+var SEASONS = {
+  Spring: {
+    'Light Spring':  ['#F7C9A9', '#FBE38E', '#A8DBC5', '#F49A8D', '#9CC8E8', '#E9D8B4'],
+    'True Spring':   ['#F26B3A', '#F7C531', '#3BB273', '#2BA7C8', '#E8A33D', '#8A5A2B'],
+    'Bright Spring': ['#FF5A5F', '#00A6A6', '#FFD23F', '#3A86FF', '#8AC926', '#2D3047']
+  },
+  Summer: {
+    'Light Summer':  ['#C9D7EA', '#E7C6D6', '#B8D8D0', '#D6CFE6', '#A7B6C9', '#F0E6EF'],
+    'True Summer':   ['#6C8EBF', '#C47A9B', '#7FA7A1', '#8E7FB8', '#5B6B7D', '#D9A9B9'],
+    'Soft Summer':   ['#8A9BA8', '#B6A3A9', '#8FA59A', '#A89F91', '#6E7480', '#C9B8B0']
+  },
+  Autumn: {
+    'Soft Autumn':   ['#C9A27E', '#A7A36B', '#D49A7A', '#8FA38A', '#B98F84', '#7D6A58'],
+    'True Autumn':   ['#C2571A', '#D9A13B', '#6B7A2E', '#8C4A2F', '#2F6D62', '#A0522D'],
+    'Deep Autumn':   ['#7A2E1F', '#4E5B31', '#B5651D', '#3C2A21', '#1F5C55', '#8B6914']
+  },
+  Winter: {
+    'Deep Winter':   ['#5B1A2E', '#1B2A4A', '#0F5257', '#3D1F4E', '#161616', '#B0003A'],
+    'True Winter':   ['#D7003A', '#0047AB', '#00843D', '#F2F4F7', '#161616', '#6A0DAD'],
+    'Bright Winter': ['#FF007F', '#00B2CA', '#4B0082', '#F2F4F7', '#161616', '#00C853']
+  }
+};
+// the line as it first appears: one piece from many different closets
+var MIXED = ['#C9A27E', '#1F2A44', '#7FA7A1', '#C2571A', '#E7C6D6', '#D9A13B', '#2F6D62', '#F2F4F7', '#8E7FB8'];
+
+// ---------- garment shapes, drawn from a pin line at y = 0 ----------
+var SHAPES = {
+  tee:    { w: 120, d: 'M-60,0 L-24,0 Q0,16 24,0 L60,0 L88,30 L64,48 L50,34 L50,122 L-50,122 L-50,34 L-64,48 L-88,30 Z' },
+  jeans:  { w: 88,  d: 'M-44,0 L44,0 L48,176 L10,176 L2,54 L-6,176 L-46,176 Z',
+            extra: '<path d="M-44,12 L44,12" stroke="#F5F0E6" stroke-width="1.4" stroke-dasharray="3 3" opacity=".7"/><path d="M-46,170 L-6,170 M10,170 L48,170" stroke="#F5F0E6" stroke-width="2" opacity=".9"/><path d="M-45,170 L-40,170" stroke="#C2571A" stroke-width="2.2"/>' },
+  dress:  { w: 70,  d: 'M-26,0 L-18,0 Q0,16 18,0 L26,0 L32,52 L64,172 L-64,172 L-32,52 Z',
+            extra: '<path d="M-31,52 Q0,60 31,52" stroke="#1F2A44" stroke-width="1.2" opacity=".35" fill="none"/>' },
+  shirt:  { w: 116, d: 'M-58,0 L-20,0 L0,14 L20,0 L58,0 L74,22 L80,128 L64,130 L56,40 L50,40 L50,130 L-50,130 L-50,40 L-56,40 L-64,130 L-80,128 L-74,22 Z',
+            extra: '<path d="M0,14 L0,130" stroke="#1F2A44" stroke-width="1.2" opacity=".35"/><path d="M-20,0 L-6,22 L0,14 L6,22 L20,0" fill="#F5F0E6" opacity=".55"/><circle cx="0" cy="40" r="2" fill="#F5F0E6"/><circle cx="0" cy="70" r="2" fill="#F5F0E6"/><circle cx="0" cy="100" r="2" fill="#F5F0E6"/>' },
+  sweater:{ w: 104, d: 'M-52,0 L52,0 L56,12 L56,104 L-56,104 L-56,12 Z M-56,8 L-78,120 L-62,124 L-48,30 Z M56,8 L78,120 L62,124 L48,30 Z',
+            extra: '<path d="M-56,96 L56,96 M-78,114 L-62,118 M78,114 L62,118" stroke="#1F2A44" stroke-width="1.1" opacity=".3"/>' },
+  scarf:  { w: 40,  d: 'M-20,0 L20,0 L18,150 L12,166 L6,150 L0,166 L-6,150 L-12,166 L-18,150 Z' },
+  socks:  { w: 56,  d: 'M-28,0 L-8,0 L-8,58 Q-8,74 -24,74 L-34,74 Q-40,64 -28,58 Z M8,0 L28,0 L28,62 Q28,78 12,78 L2,78 Q-4,68 8,62 Z' }
+};
+var LINE = ['shirt', 'jeans', 'tee', 'dress', 'sweater', 'socks', 'shirt', 'scarf', 'tee'];
+var XS   = [ 95,      225,     345,   470,     600,       715,     815,     920,     1040 ];
+
+function ropeY(x) {            // the rope is a quadratic curve; find its height at x
+  var t = (x + 20) / 1240;
+  return 58 * (1 - t) * (1 - t) + 2 * 150 * t * (1 - t) + 58 * t * t;
+}
+
+function hang() {
+  var g = document.getElementById('garments');
+  var html = '';
+  LINE.forEach(function (kind, i) {
+    var s = SHAPES[kind], x = XS[i], y = ropeY(x) - 2;
+    var pin = s.w * 0.36;
+    var amp = (1.2 + (i % 3) * 0.7).toFixed(1);
+    html += '<g transform="translate(' + x + ',' + y + ')">' +
+      '<g class="sway" style="--ox:0px;--oy:0px;--amp:' + amp + 'deg;--d:' + (5 + (i % 4)) + 's;--delay:-' + i * 0.7 + 's">' +
+        '<path class="fill" d="' + s.d + '" data-i="' + i + '"/>' +
+        '<path d="' + s.d + '" fill="url(#dots)" mask="url(#shadeMask)"/>' +
+        (s.extra || '') +
+        // riso misregistration: the outline prints a hair off the fill
+        '<path d="' + s.d + '" fill="none" stroke="#1F2A44" stroke-opacity=".55" stroke-width="1.3" transform="translate(1.8,-1.2)"/>' +
+      '</g>' +
+      '<rect x="' + (-pin - 3) + '" y="-9" width="6" height="18" rx="2" fill="#B98A5E"/>' +
+      '<rect x="' + (pin - 3) + '" y="-9" width="6" height="18" rx="2" fill="#B98A5E"/>' +
+    '</g>';
+  });
+  g.innerHTML = html;
+}
+
+function paint(colors) {
+  document.querySelectorAll('#garments .fill').forEach(function (p) {
+    var i = +p.getAttribute('data-i');
+    p.setAttribute('fill', colors[i % colors.length]);
+  });
+}
+
+function buildSeasons() {
+  var root = document.getElementById('families');
+  Object.keys(SEASONS).forEach(function (fam) {
+    var col = document.createElement('div');
+    col.className = 'family';
+    var list = '';
+    Object.keys(SEASONS[fam]).forEach(function (name) {
+      var chips = SEASONS[fam][name].map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('');
+      list += '<li><button type="button" class="season" aria-pressed="false" data-season="' + fam + '|' + name + '">' +
+              '<span>' + name + '</span><span class="chips" aria-hidden="true">' + chips + '</span></button></li>';
+    });
+    col.innerHTML = '<h3>' + fam + '</h3><ul>' + list + '</ul>';
+    root.appendChild(col);
+  });
+  root.addEventListener('click', function (e) {
+    var b = e.target.closest('.season'); if (!b) return;
+    var parts = b.getAttribute('data-season').split('|');
+    document.querySelectorAll('.season').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    paint(SEASONS[parts[0]][parts[1]]);
+    document.getElementById('current').textContent = parts[1];
+    document.getElementById('line').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  });
+  document.getElementById('mix').addEventListener('click', function () {
+    document.querySelectorAll('.season').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    paint(MIXED);
+    document.getElementById('current').textContent = "a mixed line, like every closet we've ever edited";
+  });
+}
+
+// ---------- "Dress for ___" ----------
+var WORDS = ['that interview', 'the fog', 'your second date', 'the holidays', 'Ocean Beach at 5pm',
+             'your seed round', 'life to the fullest', 'the 22 Fillmore', 'the life you’re building', 'the singularity'];
+function rotate() {
+  var el = document.getElementById('rot');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var i = WORDS.length - 1;
+  function next() {
+    i = (i + 1) % WORDS.length;
+    el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap');
+    el.textContent = WORDS[i];
+    // linger on the punchline
+    setTimeout(next, WORDS[i] === 'the singularity' ? 5200 : 2000);
+  }
+  setTimeout(next, 3800);
+}
+
+document.getElementById('copy').addEventListener('click', function () {
+  var btn = this;
+  var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy email'; }, 1800); };
+  if (navigator.clipboard) navigator.clipboard.writeText('eileen@jubil.ee').then(done, function () {});
+});
+
+hang(); paint(MIXED); buildSeasons(); rotate();
+</script>
+</body>
+</html>
