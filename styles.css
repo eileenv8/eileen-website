@@ -1,22 +1,27 @@
 /* Eileen Jubilee — personal site
-   Plain CSS, no build step. Edit values in :root to reskin. */
+   Plain CSS, no build step. Edit values in :root to reskin.
+   Type: two sizes only, 12pt for reading and 9pt for labels.
+   Hierarchy comes from weight and space, not size. */
 
 :root {
-  --paper:      #FBF8F3;
-  --paper-warm: #F4EFE5;
-  --ink:        #17150F;
-  --ink-soft:   #4C4739;
-  --ink-faint:  #7C7566;
-  --rule:       #E3DCCD;
-  --accent:     #C4552C;
-  --accent-2:   #2E5D4F;
+  --paper:      #FFFFFF;
+  --paper-warm: #F4F4F4;   /* behind images while they load */
+  --ink:        #000000;
+  --ink-soft:   #000000;
+  --ink-faint:  #000000;
+  --rule:       #DDDDDD;
+  --accent:     #000000;
+  --accent-2:   #000000;
+
+  --text:  12pt;           /* everything you read */
+  --small: 9pt;            /* nav, labels, footer */
 
   --measure: 34rem;          /* reading column */
   --wide: 60rem;             /* outer container */
   --step: clamp(3rem, 7vw, 5.5rem);   /* vertical rhythm between sections */
 
-  --serif: "Fraunces", Iowan Old Style, Palatino, Georgia, serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --serif: var(--sans);    /* one family throughout */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -29,8 +34,8 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 1.0625rem;
-  line-height: 1.65;
+  font-size: var(--text);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -39,7 +44,7 @@ body {
 .column { max-width: var(--measure); }
 
 a { color: inherit; text-decoration-color: var(--rule); text-underline-offset: 0.22em; }
-a:hover { text-decoration-color: var(--accent); color: var(--accent); }
+a:hover { text-decoration-color: var(--ink); }
 
 /* ---------- nav ---------- */
 
@@ -62,8 +67,8 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .nav__name {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: -0.01em;
+  font-size: var(--text);
+  letter-spacing: 0;
   text-decoration: none;
   margin-right: auto;
   white-space: nowrap;
@@ -74,7 +79,7 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 0.82rem;
+  font-size: var(--small);
   letter-spacing: 0.04em;
   text-transform: lowercase;
 }
@@ -85,14 +90,14 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 @media (max-width: 34rem) {
   .nav__inner { flex-wrap: wrap; gap: 0.6rem 1rem; }
   .nav__name { margin-right: 0; width: 100%; }
-  .nav__links { gap: 0.9rem; font-size: 0.78rem; }
+  .nav__links { gap: 0.9rem; font-size: var(--small); }
 }
 
 /* ---------- hero ---------- */
 
 .hero {
   position: relative;
-  min-height: min(82vh, 44rem);
+  min-height: min(60vh, 32rem);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -120,21 +125,21 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .hero h1 {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(2.4rem, 6.5vw, 4.25rem);
-  line-height: 1.02;
-  letter-spacing: -0.025em;
+  font-size: var(--text);
+  line-height: 1.5;
+  letter-spacing: 0;
   margin: 0 0 1.1rem;
 }
 .hero__lede {
   font-family: var(--serif);
-  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
-  line-height: 1.4;
-  max-width: 28ch;
+  font-size: var(--text);
+  line-height: 1.5;
+  max-width: 34ch;
   margin: 0 0 1.4rem;
   color: var(--ink);
 }
 .hero__meta {
-  font-size: 0.9rem;
+  font-size: var(--small);
   color: var(--ink-soft);
   margin: 0;
 }
@@ -146,27 +151,27 @@ section { padding: var(--step) 0; border-bottom: 1px solid var(--rule); }
 section:last-of-type { border-bottom: none; }
 
 .eyebrow {
-  font-size: 0.74rem;
+  font-size: var(--small);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--ink);
   margin: 0 0 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 h2 {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(1.6rem, 3.4vw, 2.1rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-size: var(--text);
+  line-height: 1.5;
+  letter-spacing: 0;
   margin: 0 0 1.2rem;
 }
 h3 {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.15rem;
-  letter-spacing: -0.01em;
+  font-size: var(--text);
+  letter-spacing: 0;
   margin: 0 0 0.4rem;
 }
 
@@ -206,13 +211,13 @@ p:last-child { margin-bottom: 0; }
 }
 
 .sprint__body { max-width: var(--measure); }
-.sprint__body p { font-size: 0.97rem; color: var(--ink-soft); }
+.sprint__body p { font-size: var(--text); color: var(--ink-soft); }
 .sprint__addon {
   margin-top: 0.9rem;
   padding-left: 0.9rem;
   border-left: 2px solid var(--accent-2);
 }
-.sprint__addon strong { color: var(--ink); font-weight: 500; }
+.sprint__addon strong { color: var(--ink); font-weight: 600; }
 
 .sprint__terms {
   margin: 0;
@@ -223,25 +228,25 @@ p:last-child { margin-bottom: 0; }
   .sprint__terms { flex-direction: column; gap: 0.7rem; }
 }
 .sprint__terms dt {
-  font-size: 0.8rem;
+  font-size: var(--small);
   color: var(--ink-faint);
 }
-.sprint__terms dd { margin: 0; font-size: 0.97rem; }
+.sprint__terms dd { margin: 0; font-size: var(--text); }
 .sprint__terms .sprint__price {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.5rem;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-size: var(--text);
+  line-height: 1.5;
+  letter-spacing: 0;
 }
 
 .sprint-notes {
   max-width: var(--measure);
   margin-top: 2rem;
-  font-size: 0.95rem;
+  font-size: var(--text);
   color: var(--ink-soft);
 }
-.sprint-notes strong { color: var(--ink); font-weight: 500; }
+.sprint-notes strong { color: var(--ink); font-weight: 600; }
 .sprint-notes a { text-decoration-color: var(--accent); }
 
 /* writing list */
@@ -250,15 +255,15 @@ p:last-child { margin-bottom: 0; }
 .entries li { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
 .entries li:first-child { border-top: 1px solid var(--rule); }
 .entries h3 { margin-bottom: 0.15rem; }
-.entries .date { font-size: 0.8rem; color: var(--ink-faint); letter-spacing: 0.04em; }
-.entries p { font-size: 0.95rem; color: var(--ink-soft); margin: 0.35rem 0 0; }
+.entries .date { font-size: var(--small); color: var(--ink-faint); letter-spacing: 0.04em; }
+.entries p { font-size: var(--text); color: var(--ink-soft); margin: 0.35rem 0 0; }
 
 .note {
   max-width: var(--measure);
   padding: 1.1rem 1.25rem;
   background: var(--paper-warm);
   border-left: 2px solid var(--accent);
-  font-size: 0.95rem;
+  font-size: var(--text);
   color: var(--ink-soft);
 }
 
@@ -266,14 +271,14 @@ p:last-child { margin-bottom: 0; }
 
 .contact-mail {
   font-family: var(--serif);
-  font-size: clamp(1.4rem, 4vw, 2.1rem);
-  letter-spacing: -0.02em;
+  font-size: var(--text);
+  letter-spacing: 0;
   text-decoration: none;
-  border-bottom: 2px solid var(--rule);
+  border-bottom: 1px solid var(--ink);
   display: inline-block;
   padding-bottom: 0.1em;
 }
-.contact-mail:hover { border-bottom-color: var(--accent); }
+.contact-mail:hover { border-bottom-width: 2px; }
 
 .elsewhere {
   list-style: none;
@@ -282,12 +287,12 @@ p:last-child { margin-bottom: 0; }
   gap: 1.25rem;
   padding: 0;
   margin: 1.75rem 0 0;
-  font-size: 0.92rem;
+  font-size: var(--small);
 }
 
 footer {
   padding: 2.5rem 0 3.5rem;
-  font-size: 0.82rem;
+  font-size: var(--small);
   color: var(--ink-faint);
   border-top: 1px solid var(--rule);
 }

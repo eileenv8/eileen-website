@@ -57,7 +57,7 @@
     s.setup = function () {
       const c = s.createCanvas(host.offsetWidth, host.offsetHeight);
       c.parent(host);
-      s.background(251, 248, 243);
+      s.background(255, 255, 255);
       s.noFill();
       seed();
       if (reduced) {
@@ -77,7 +77,7 @@
       age++;
       // Very slow bleed back toward paper so the field never turns to mud.
       s.noStroke();
-      s.fill(251, 248, 243, 6);
+      s.fill(255, 255, 255, 6);
       s.rect(0, 0, s.width, s.height);
       s.noFill();
       strokes.forEach(step);
@@ -86,7 +86,7 @@
 
     s.windowResized = function () {
       s.resizeCanvas(host.offsetWidth, host.offsetHeight);
-      s.background(251, 248, 243);
+      s.background(255, 255, 255);
       seed();
       if (reduced) {
         for (let i = 0; i < 900; i++) { zoff += 0.0008; strokes.forEach(step); }
