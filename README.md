@@ -9,7 +9,7 @@ sketch. No framework, no build step, no CMS.
 |---|---|
 | `index.html` | The whole page. All copy lives here. |
 | `styles.css` | All styling. Colors and spacing are CSS variables at the top, in `:root`. |
-| `sketch.js` | The p5.js flow-field animation behind the hero. |
+| `sketch.js` | The p5.js animation behind the hero: a mycelial network that grows, fuses into nodes, and pulses. |
 | `vercel.json` | Tells Vercel this is a static site, not a Next.js app. |
 | `clothesline/index.html` | Clothesline SF, the styling business with Ashley. Served at `/clothesline`. Self-contained: its CSS and JS live in the one file. |
 | `portraits/` | Ten illustrated portraits of Eileen and the code that draws them. See `portraits/README.md`. |
