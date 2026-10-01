@@ -8,6 +8,7 @@ Ten illustrated portraits of Eileen, all drawn as code from one shared set of sh
 |---|---|---|
 | `01-golden-hour.svg` | Flat vector | `-animated` blinks, sways, sun breathes |
 | `02-golden-hour-detailed.svg` | Detailed flat vector | `-animated` adds drifting fog |
+| `02a`–`02d` | Detailed, new angles | three-quarter (both sides), head tilt, turn and tilt; made by `src/angles.py` |
 | `03-pencil-sketch.svg` | Pencil, black and white | |
 | `04-gestural-ink.svg` | Brush ink + watercolor | |
 | `05-one-line.svg` | Single continuous line | `-animated` draws itself |
@@ -42,6 +43,7 @@ python3 style_lines.py         # 03, 04, 05
 python3 style_more.py          # 06, 07, 08
 python3 style_paper.py         # 09
 python3 style_gen.py           # 10
+python3 angles.py              # 02a-02d: the detailed portrait at new angles
 ```
 
 Edit a shape once in `geo.py` (say, the brow arch) and every style picks it up.
