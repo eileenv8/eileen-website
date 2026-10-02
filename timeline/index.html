@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timeline — Eileen Jubilee</title>
+<meta name="description" content="Eileen Jubilee's work over time: community, design, writing, cooperative models, and facilitation.">
+<meta name="author" content="Eileen Jubilee">
+<link rel="canonical" href="https://eileen.jubil.ee/timeline/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Eileen Jubilee — Timeline">
+<meta property="og:url" content="https://eileen.jubil.ee/timeline/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🜂</text></svg>">
+<style>
+/* Timeline page. Shares the site's tokens (white, black, 12pt / 9pt) from styles.css.
+   The only colour on the page is the thread colours: they carry meaning. */
+.tl-intro { padding: var(--step) 0 2rem; }
+.tl-intro h1 { font-size: var(--text); font-weight: 600; line-height: 1.5; margin: 0; }
+.tl-intro p { max-width: var(--measure); margin: 0 0 0.6rem; }
+.tl-intro .threads-line { font-size: var(--small); letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 1.4rem; }
+
+/* filters */
+.filters {
+  position: sticky; top: 3.1rem; z-index: 9;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.filters__inner { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 0.75rem 0; }
+.filters__label { font-size: var(--small); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-right: 0.5rem; }
+.pill {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font: inherit; font-size: var(--small); color: var(--ink);
+  background: transparent; border: 1px solid var(--rule); border-radius: 999px;
+  padding: 0.35rem 0.8rem; cursor: pointer;
+}
+.pill i { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--c); flex: none; }
+.pill:hover, .pill.is-hot { border-color: var(--c); }
+.pill[aria-pressed="true"] { background: var(--c); border-color: var(--c); color: #fff; }
+.pill[aria-pressed="true"] i { background: #fff; }
+.pill:focus-visible, .clear:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.clear { font: inherit; font-size: var(--small); background: none; border: 0; text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; padding: 0.35rem 0.4rem; }
+.clear[hidden] { display: none; }
+
+/* the timeline itself */
+.tl { position: relative; margin: 2.5rem 0 1rem; }
+.tl__spine { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: repeating-linear-gradient(to bottom, var(--rule) 0 6px, transparent 6px 12px); }
+.tl__year { position: absolute; left: 50%; transform: translate(-50%, -50%); font-size: var(--small); font-weight: 600; letter-spacing: 0.08em; background: var(--paper); padding: 0.1rem 0.6rem; z-index: 4; }
+.tl__bar { position: absolute; width: 3px; border-radius: 2px; background: var(--c); opacity: 0.3; transition: opacity .3s ease; z-index: 1; }
+.tl__bar.is-hot { opacity: 0.85; }
+.tl__bar.is-off { opacity: 0.05; }
+
+.card { position: absolute; width: 50%; box-sizing: border-box; transition: opacity .4s ease, filter .4s ease; z-index: 2; }
+.card--left { left: 0; padding-right: 1.75rem; text-align: right; }
+.card--right { left: 50%; padding-left: 1.75rem; }
+.card.is-off { opacity: 0.1; filter: grayscale(1); pointer-events: none; }
+.card__body { padding: 0.6rem 0.9rem; border-color: var(--rule); border-style: solid; border-width: 0; transition: background .3s ease; }
+.card--left .card__body { border-right-width: 1px; }
+.card--right .card__body { border-left-width: 1px; }
+.card.is-hot .card__body { background: #f7f7f7; }
+.card__tick { position: absolute; top: 0.45rem; width: 1.75rem; height: 1px; background: var(--rule); }
+.card--left .card__tick { right: 0; }
+.card--right .card__tick { left: 0; }
+.card__dots { position: absolute; top: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; z-index: 3; }
+.card--left .card__dots { right: -6px; }
+.card--right .card__dots { left: -6px; }
+.card__dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); border: 2px solid var(--paper); transition: transform .3s ease; }
+.card__dots i:first-child { width: 12px; height: 12px; }
+.card.is-hot .card__dots i { transform: scale(1.3); }
+
+.card__when { font-size: var(--small); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 0.2rem; }
+.card__when .live { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); margin-left: 0.4rem; vertical-align: middle; animation: live 2s ease-in-out infinite; }
+@keyframes live { 50% { opacity: 0.25; } }
+.card h2 { font-size: var(--text); font-weight: 600; line-height: 1.4; margin: 0; }
+.card__sub { margin: 0 0 0.4rem; }
+.card__desc { margin: 0; }
+.card__hi { margin: 0.4rem 0 0; font-style: italic; }
+.card__tags { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; margin-top: 0.5rem; font-size: var(--small); }
+.card--left .card__tags { justify-content: flex-end; }
+.card__tags span { display: inline-flex; align-items: center; gap: 0.3rem; }
+.card__tags span i { width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+
+.tl-end { text-align: center; font-size: var(--small); letter-spacing: 0.12em; text-transform: uppercase; padding: 2rem 0 var(--step); }
+
+/* phones: one column, spine on the left, cards in date order */
+@media (max-width: 44rem) {
+  .tl { height: auto !important; padding-left: 1.4rem; }
+  .tl__spine { left: 0.35rem; }
+  .tl__year, .tl__bar { display: none; }
+  .card { position: relative; top: auto !important; left: auto; width: 100%; padding: 0 0 1.75rem; text-align: left; }
+  .card--left .card__body, .card--right .card__body { border-right-width: 0; border-left-width: 1px; }
+  .card__tick { display: none; }
+  .card--left .card__dots, .card--right .card__dots { left: -1.4rem; right: auto; }
+  .card--left .card__tags { justify-content: flex-start; }
+  .filters { position: static; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card, .tl__bar, .card__dots i, .card__body { transition: none; }
+  .card__when .live { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav is-stuck" id="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__name" href="/">Eileen Jubilee</a>
+    <ul class="nav__links">
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#work">Work with me</a></li>
+      <li><a href="/timeline/" aria-current="true">Timeline</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="wrap tl-intro">
+  <h1>Timeline</h1>
+  <p class="threads-line">Community · Design · Co-living · Facilitation · Cooperation</p>
+  <p>Building shared spaces, digital and physical, where people can think, create, and live together.</p>
+</header>
+
+<div class="filters">
+  <div class="wrap filters__inner" id="filters" role="group" aria-label="Filter by thread">
+    <span class="filters__label">Filter by thread</span>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="tl" id="tl">
+    <div class="tl__spine" aria-hidden="true"></div>
+  </div>
+  <p class="tl-end">To be continued</p>
+</main>
+
+<footer>
+  <div class="wrap"><p>&copy; 2026 Eileen Jubilee</p></div>
+</footer>
+
+<script>
+/* ---------------------------------------------------------------
+   EDIT HERE. Each entry is one card. Months are 1-12.
+   Leave out endYear/endMonth and set ongoing: true for current work.
+   threads: any of community, design, writing, cooperative,
+            facilitation, personal (the first one sets the card's colour).
+   --------------------------------------------------------------- */
+var THREADS = {
+  community:    { label: 'Community & Co-living',     color: '#8B6F4E' },
+  design:       { label: 'Design & UI',               color: '#4F7463' },
+  writing:      { label: 'Writing & Marketing',       color: '#A0573C' },
+  cooperative:  { label: 'Cooperative Models',        color: '#6E5C86' },
+  facilitation: { label: 'Facilitation & Leadership', color: '#4F6880' },
+  personal:     { label: 'Personal',                  color: '#A86F4E' }
+};
+
+var ENTRIES = [
+  { title: 'Reed College', subtitle: 'BA Economics · Economic Sociology Track',
+    description: "Studied economics, anthropology, and sociology with a focus on economic sociology. Wrote thesis on Facebook's market structure as an advertising monopsony. Researched digital co-ops, internet culture, and the alt-right.",
+    highlight: 'Directed HUM Play — a slapstick comedy tradition about the western canon.',
+    threads: ['cooperative', 'writing', 'facilitation'], startYear: 2016, startMonth: 9, endYear: 2020, endMonth: 5 },
+  { title: 'Trusted CMO', subtitle: 'Freelance Copywriter',
+    description: 'Content and social media marketing. Primary client: Alchemy, an early AI company.',
+    threads: ['writing'], startYear: 2020, startMonth: 3, endYear: 2020, endMonth: 10 },
+  { title: 'The Center SF', subtitle: 'Community Member & Volunteer',
+    description: 'Lived at and volunteered with a co-living and teahouse space in San Francisco.',
+    threads: ['community', 'cooperative'], startYear: 2020, startMonth: 1, endYear: 2022, endMonth: 6 },
+  { title: 'Handshake.fyi', subtitle: 'Copywriter → Director of Community',
+    description: 'Consulting firm with clients in defense and clean energy. Copywriting, research, and presentation creation. Promoted to Director of Community.',
+    threads: ['writing', 'community'], startYear: 2020, startMonth: 6, endYear: 2021, endMonth: 6 },
+  { title: 'UX/UI Fundamentals', subtitle: 'Certificate Course',
+    description: 'Post-graduate coursework in the fundamentals of UX and UI design.',
+    threads: ['design'], startYear: 2020, startMonth: 10, endYear: 2021, endMonth: 2 },
+  { title: 'Cabin DAO', subtitle: 'Project Manager & Facilitator',
+    description: 'Web3 DAO building co-living in nature for digital nomads. Project managed products including Stamps, a tokenized reputation system. Coordinated designers.',
+    highlight: 'Facilitated multiple in-person co-living retreats in nature.',
+    threads: ['community', 'facilitation', 'design'], startYear: 2021, startMonth: 6, endYear: 2023, endMonth: 6 },
+  { title: 'Matrescence', subtitle: 'Becoming a mother',
+    description: 'Welcomed son Arthur into the world. A period of profound transformation — navigating the identity shift of new parenthood while deepening commitments to cooperative childcare, community, and family life.',
+    threads: ['personal', 'cooperative'], startYear: 2023, startMonth: 12, endYear: 2024, endMonth: 12 },
+  { title: 'The Fold', subtitle: 'Membership Manager',
+    description: "Community workspace in San Francisco's Mission District. Developed the Foresight Institute partnership, operational infrastructure, member agreements, and community programming.",
+    threads: ['community', 'cooperative', 'facilitation'], startYear: 2024, startMonth: 11, endYear: 2026, endMonth: 9 },
+  { title: 'Puddle Jumpers', subtitle: 'Marketing Coordinator · Parent Co-op',
+    description: 'Marketing coordinator for a parent cooperative daycare, through its closing in June 2026.',
+    threads: ['cooperative', 'community', 'writing'], startYear: 2024, startMonth: 6, endYear: 2026, endMonth: 6 },
+  { title: 'Jubilee Studio', subtitle: 'Co-founder · Designer',
+    description: 'Design studio co-founded with Calvin, embracing design as a broad discipline — from UI and digital products to experience design, events, and physical spaces. Projects include the jubil.ee digital cookbook, a searchable small-batch goods widget, and creative direction for community gatherings.',
+    threads: ['design', 'community'], startYear: 2025, startMonth: 1, ongoing: true },
+  { title: 'Edge Esmeralda', subtitle: 'Family Co-living Pop-up',
+    description: 'Created a family-friendly co-living pop-up house — 4 families with children plus singles, roughly 7–8 people total.',
+    threads: ['community', 'cooperative'], startYear: 2025, startMonth: 6, endYear: 2025, endMonth: 8 },
+  { title: 'Authentic Revolution', subtitle: 'The Authentic Facilitator Training',
+    description: 'Intensive facilitation training in the art and science of Authentic Relating. Learning to design and lead transformative events — from corporate workshops to intimate gatherings — with a focus on connection design, ethical use of power, group dynamics, and conflict navigation.',
+    threads: ['facilitation'], startYear: 2025, startMonth: 9, endYear: 2026, endMonth: 6 }
+];
+
+/* --------------------------------------------------------------- */
+(function () {
+  var NOW = new Date();
+  var NOW_FRAC = NOW.getFullYear() + NOW.getMonth() / 12;
+  var MIN_YEAR = Math.min.apply(null, ENTRIES.map(function (e) { return e.startYear; }));
+  var PX_PER_YEAR = 280;
+  var GAP = 28;
+
+  var tl = document.getElementById('tl');
+  var filtersEl = document.getElementById('filters');
+  var active = [];
+  var hot = null;
+
+  function frac(y, m) { return y + (m - 1) / 12; }
+  function start(e) { return frac(e.startYear, e.startMonth); }
+  function end(e) { return e.ongoing ? NOW_FRAC : frac(e.endYear, e.endMonth); }
+  function yPos(f) { return (f - MIN_YEAR) * PX_PER_YEAR; }
+  function range(e) {
+    if (e.ongoing) return e.startYear + '–present';
+    return e.startYear === e.endYear ? String(e.startYear) : e.startYear + '–' + e.endYear;
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  var entries = ENTRIES.slice().sort(function (a, b) { return start(a) - start(b); });
+
+  // filter pills
+  Object.keys(THREADS).forEach(function (k) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'pill'; b.dataset.thread = k;
+    b.setAttribute('aria-pressed', 'false');
+    b.style.setProperty('--c', THREADS[k].color);
+    b.innerHTML = '<i></i>' + esc(THREADS[k].label);
+    filtersEl.appendChild(b);
+  });
+  var clear = document.createElement('button');
+  clear.type = 'button'; clear.className = 'clear'; clear.textContent = 'Clear all'; clear.hidden = true;
+  filtersEl.appendChild(clear);
+
+  // year labels
+  var last = Math.floor(NOW_FRAC);
+  for (var y = MIN_YEAR; y <= last; y++) {
+    var lab = document.createElement('div');
+    lab.className = 'tl__year'; lab.textContent = y; lab.style.top = yPos(y) + 'px';
+    lab.setAttribute('aria-hidden', 'true');
+    tl.appendChild(lab);
+  }
+
+  // cards and duration bars
+  entries.forEach(function (e) {
+    var c = THREADS[e.threads[0]].color;
+    var bar = document.createElement('div');
+    bar.className = 'tl__bar'; bar.style.setProperty('--c', c);
+    bar.style.top = yPos(start(e)) + 'px';
+    bar.style.height = Math.max((end(e) - start(e)) * PX_PER_YEAR, 20) + 'px';
+    bar.style.background = 'linear-gradient(to bottom, ' + c + ', ' + c + '55)';
+    tl.appendChild(bar);
+
+    var card = document.createElement('article');
+    card.className = 'card';
+    card.style.setProperty('--c', c);
+    card.innerHTML =
+      '<span class="card__tick" aria-hidden="true"></span>' +
+      '<span class="card__dots" aria-hidden="true">' + e.threads.map(function (t) { return '<i style="--c:' + THREADS[t].color + '"></i>'; }).join('') + '</span>' +
+      '<div class="card__body">' +
+        '<p class="card__when">' + range(e) + (e.ongoing ? '<span class="live" aria-label="ongoing"></span>' : '') + '</p>' +
+        '<h2>' + esc(e.title) + '</h2>' +
+        '<p class="card__sub">' + esc(e.subtitle) + '</p>' +
+        '<p class="card__desc">' + esc(e.description) + '</p>' +
+        (e.highlight ? '<p class="card__hi">' + esc(e.highlight) + '</p>' : '') +
+        '<div class="card__tags">' + e.threads.map(function (t) { return '<span><i style="--c:' + THREADS[t].color + '"></i>' + esc(THREADS[t].label) + '</span>'; }).join('') + '</div>' +
+      '</div>';
+    card.addEventListener('mouseenter', function () { setHot(e.threads[0]); });
+    card.addEventListener('mouseleave', function () { setHot(null); });
+    tl.appendChild(card);
+    e._card = card; e._bar = bar;
+  });
+
+  // Place cards beside the spine. Each card sits as close to its start date as it
+  // can without overlapping the card above it, on whichever side lets it sit closer.
+  // Uses each card's real rendered height, so long descriptions never collide.
+  function layout() {
+    var narrow = window.matchMedia('(max-width: 44rem)').matches;
+    var leftBottom = -Infinity, rightBottom = -Infinity, maxBottom = 0;
+    entries.forEach(function (e) {
+      var card = e._card;
+      card.classList.remove('card--left', 'card--right');
+      card.classList.add('card--right');                 // measure at final width
+      if (narrow) { card.classList.toggle('card--left', false); return; }
+      var h = card.offsetHeight;
+      var ideal = yPos(start(e));
+      var leftY = Math.max(ideal, leftBottom + GAP);
+      var rightY = Math.max(ideal, rightBottom + GAP);
+      var side, top;
+      if (leftY - ideal <= rightY - ideal) { side = 'left'; top = leftY; leftBottom = top + h; }
+      else { side = 'right'; top = rightY; rightBottom = top + h; }
+      card.classList.remove('card--right');
+      card.classList.add('card--' + side);
+      card.style.top = top + 'px';
+      e._bar.style.left = side === 'left' ? 'calc(50% - 5px)' : 'calc(50% + 2px)';
+      maxBottom = Math.max(maxBottom, top + h);
+    });
+    tl.style.height = narrow ? '' : (Math.max(maxBottom, yPos(NOW_FRAC)) + 60) + 'px';
+  }
+
+  function paint() {
+    entries.forEach(function (e) {
+      var on = !active.length || e.threads.some(function (t) { return active.indexOf(t) > -1; });
+      var isHot = hot && e.threads.indexOf(hot) > -1;
+      e._card.classList.toggle('is-off', !on);
+      e._card.classList.toggle('is-hot', !!(on && isHot));
+      e._bar.classList.toggle('is-off', !on);
+      e._bar.classList.toggle('is-hot', !!(on && isHot));
+    });
+    filtersEl.querySelectorAll('.pill').forEach(function (p) {
+      p.setAttribute('aria-pressed', active.indexOf(p.dataset.thread) > -1 ? 'true' : 'false');
+      p.classList.toggle('is-hot', hot === p.dataset.thread);
+    });
+    clear.hidden = !active.length;
+  }
+  function setHot(t) { hot = t; paint(); }
+
+  filtersEl.addEventListener('click', function (ev) {
+    var p = ev.target.closest('.pill');
+    if (p) {
+      var k = p.dataset.thread, i = active.indexOf(k);
+      if (i > -1) active.splice(i, 1); else active.push(k);
+      paint();
+    } else if (ev.target === clear) { active = []; paint(); }
+  });
+
+  layout(); paint();
+  var t;
+  window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(layout, 120); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+})();
+</script>
+</body>
+</html>

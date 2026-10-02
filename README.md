@@ -12,6 +12,7 @@ sketch. No framework, no build step, no CMS.
 | `sketch.js` | The p5.js animation behind the hero: a mycelial network that grows, fuses into nodes, and pulses. |
 | `vercel.json` | Tells Vercel this is a static site, not a Next.js app. |
 | `clothesline/index.html` | Clothesline SF, the styling business with Ashley. Served at `/clothesline`. Self-contained: its CSS and JS live in the one file. |
+| `timeline/index.html` | The interactive timeline at `/timeline`. To add or change an entry, edit the `ENTRIES` list near the bottom of the file (marked EDIT HERE). |
 | `portraits/` | Ten illustrated portraits of Eileen and the code that draws them. See `portraits/README.md`. |
 
 ## Editing it
