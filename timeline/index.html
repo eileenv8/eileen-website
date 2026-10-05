@@ -89,6 +89,10 @@
 .card__img { display: none; margin: 0 0 0.7rem; }
 .card__img img { display: block; width: 100%; max-width: 20rem; height: auto; border: 1px solid var(--rule); }
 .card--left .card__img img { margin-left: auto; }
+.card__img--strip figcaption { font-size: var(--small); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.35rem; }
+.strip { display: flex; gap: 0.5rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0.4rem; }
+.strip img { flex: 0 0 82%; max-width: 20rem; width: 82%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; scroll-snap-align: start; margin: 0 !important; }
+.strip:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 @media (hover: none), (max-width: 44rem) {
   .card__img { display: block; }
   .card__img { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
@@ -99,7 +103,10 @@
   pointer-events: none; opacity: 0; transform: translateY(8px) scale(.98);
   transition: opacity .25s ease, transform .25s ease;
 }
-.peek img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--rule); border-top: 3px solid var(--c); box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+.peek__frame { position: relative; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--rule); border-top: 3px solid var(--c); box-shadow: 0 10px 30px rgba(0,0,0,.12); overflow: hidden; }
+.peek__frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .6s ease; }
+.peek__frame img.is-active { opacity: 1; }
+.peek figcaption { font-size: var(--small); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.4rem; background: var(--paper); display: inline-block; padding: 0 0.3rem 0 0; }
 .peek--right { left: calc(50% + 1.75rem); }
 .peek--left { right: calc(50% + 1.75rem); }
 .peek.is-on { opacity: 1; transform: none; }
@@ -120,7 +127,7 @@
   .filters { position: static; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .card, .tl__bar, .card__dots i, .card__body, .peek, .card__img { transition: none; }
+  .card, .tl__bar, .card__dots i, .card__body, .peek, .card__img, .peek__frame img { transition: none; }
   .card__img { opacity: 1 !important; transform: none !important; }
   .card__when .live { animation: none; }
 }
@@ -174,6 +181,9 @@
             Drop a photo into timeline/img/ and put its name here,
             e.g. image: 'img/reed-graduation.jpg'. Leave it out for no picture.
    imageAlt: a short description of the picture, for screen readers.
+   images:  several pictures instead of one. They play as a slideshow on hover
+            and sit in a swipeable row on phones. Each one is { src, alt }.
+   imagesCaption: a few words shown under the slideshow, e.g. 'Build week'.
    --------------------------------------------------------------- */
 var THREADS = {
   community:    { label: 'Community & Co-living',     color: '#8B6F4E' },
@@ -205,7 +215,13 @@ var ENTRIES = [
   { title: 'UX/UI Fundamentals', image: 'img/ux.svg', subtitle: 'Certificate Course',
     description: 'Post-graduate coursework in the fundamentals of UX and UI design.',
     threads: ['design'], startYear: 2020, startMonth: 10, endYear: 2021, endMonth: 2 },
-  { title: 'Cabin DAO', image: 'img/cabin-dao.svg', subtitle: 'Project Manager & Facilitator',
+  { title: 'Cabin DAO', imagesCaption: 'Build week',
+    images: [
+      { src: 'img/cabin-dao-crew.jpg', alt: 'The build crew setting footing forms under a shade sail and live oaks' },
+      { src: 'img/cabin-dao-footings.jpg', alt: 'Two builders in ear protection setting cardboard footing forms beside a barrel sauna' },
+      { src: 'img/cabin-dao-tools.jpg', alt: 'Tools laid out on the ground: a level, hammers, tape measures, picks, and shovels' },
+      { src: 'img/cabin-dao-longhorn.jpg', alt: 'A longhorn standing among the oaks next to the barrel sauna' }
+    ], subtitle: 'Project Manager & Facilitator',
     description: 'Web3 DAO building co-living in nature for digital nomads. Project managed products including Stamps, a tokenized reputation system. Coordinated designers.',
     highlight: 'Facilitated multiple in-person co-living retreats in nature.',
     threads: ['community', 'facilitation', 'design'], startYear: 2021, startMonth: 6, endYear: 2023, endMonth: 6 },
@@ -297,7 +313,10 @@ var ENTRIES = [
       '<span class="card__tick" aria-hidden="true"></span>' +
       '<span class="card__dots" aria-hidden="true">' + e.threads.map(function (t) { return '<i style="--c:' + THREADS[t].color + '"></i>'; }).join('') + '</span>' +
       '<div class="card__body">' +
-        (e.image ? '<figure class="card__img"><img src="' + esc(e.image) + '" alt="' + esc(e.imageAlt || '') + '" width="320" height="240" loading="lazy"></figure>' : '') +
+        (e.images ? '<figure class="card__img card__img--strip"><div class="strip" tabindex="0" aria-label="' + esc(e.title) + ' photos">' +
+            e.images.map(function (im) { return '<img src="' + esc(im.src) + '" alt="' + esc(im.alt || '') + '" width="320" height="240" loading="lazy">'; }).join('') +
+            '</div>' + (e.imagesCaption ? '<figcaption>' + esc(e.imagesCaption) + ' · ' + e.images.length + ' photos</figcaption>' : '') + '</figure>'
+          : e.image ? '<figure class="card__img"><img src="' + esc(e.image) + '" alt="' + esc(e.imageAlt || '') + '" width="320" height="240" loading="lazy"></figure>' : '') +
         '<p class="card__when">' + range(e) + (e.ongoing ? '<span class="live" aria-label="ongoing"></span>' : '') + '</p>' +
         '<h2>' + esc(e.title) + '</h2>' +
         '<p class="card__sub">' + esc(e.subtitle) + '</p>' +
@@ -319,13 +338,17 @@ var ENTRIES = [
   var hoverable = window.matchMedia('(hover: hover) and (min-width: 44.01rem)');
   var peek = document.createElement('figure');
   peek.className = 'peek'; peek.setAttribute('aria-hidden', 'true');
-  peek.innerHTML = '<img alt="" width="320" height="240">';
   tl.appendChild(peek);
-  var peekImg = peek.querySelector('img');
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var timer = null;
   function showPeek(e) {
-    if (!e.image || !hoverable.matches) return;
+    if (!(e.image || e.images) || !hoverable.matches) return;
     var card = e._card;
-    peekImg.src = e.image;
+    var pics = e.images || [{ src: e.image }];
+    clearInterval(timer);
+    peek.innerHTML = '<div class="peek__frame">' +
+      pics.map(function (im, i) { return '<img src="' + esc(im.src) + '" alt="" class="' + (i ? '' : 'is-active') + '">'; }).join('') +
+      '</div>' + (pics.length > 1 ? '<figcaption>' + esc(e.imagesCaption || e.title) + ' · <span>1</span>/' + pics.length + '</figcaption>' : '');
     peek.style.setProperty('--c', THREADS[e.threads[0]].color);
     peek.classList.toggle('peek--right', card.classList.contains('card--left'));
     peek.classList.toggle('peek--left', card.classList.contains('card--right'));
@@ -333,8 +356,17 @@ var ENTRIES = [
     var max = tl.offsetHeight - peek.offsetHeight;
     peek.style.top = Math.max(0, Math.min(top, max)) + 'px';
     peek.classList.add('is-on');
+    if (pics.length > 1 && !still.matches) {
+      var i = 0, imgs = peek.querySelectorAll('img'), count = peek.querySelector('figcaption span');
+      timer = setInterval(function () {
+        imgs[i].classList.remove('is-active');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('is-active');
+        count.textContent = i + 1;
+      }, 1700);
+    }
   }
-  function hidePeek() { peek.classList.remove('is-on'); }
+  function hidePeek() { peek.classList.remove('is-on'); clearInterval(timer); }
 
   if ('IntersectionObserver' in window) {
     var seen = new IntersectionObserver(function (list) {
