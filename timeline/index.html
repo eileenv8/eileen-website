@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Timeline — Eileen Jubilee</title>
-<meta name="description" content="Eileen Jubilee's work over time: community, design, writing, cooperative models, and facilitation.">
+<meta name="description" content="Eileen Jubilee's work over time: community, design, writing, cooperative models, facilitation, and technology.">
 <meta name="author" content="Eileen Jubilee">
 <link rel="canonical" href="https://eileen.jubil.ee/timeline/">
 <meta property="og:type" content="website">
@@ -85,6 +85,26 @@
 .card__tags span { display: inline-flex; align-items: center; gap: 0.3rem; }
 .card__tags span i { width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
 
+/* pictures */
+.card__img { display: none; margin: 0 0 0.7rem; }
+.card__img img { display: block; width: 100%; max-width: 20rem; height: auto; border: 1px solid var(--rule); }
+.card--left .card__img img { margin-left: auto; }
+@media (hover: none), (max-width: 44rem) {
+  .card__img { display: block; }
+  .card__img { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+  .card__img.is-seen { opacity: 1; transform: none; }
+}
+.peek {
+  position: absolute; z-index: 8; margin: 0; width: min(20rem, calc(50% - 3.5rem));
+  pointer-events: none; opacity: 0; transform: translateY(8px) scale(.98);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.peek img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--rule); border-top: 3px solid var(--c); box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+.peek--right { left: calc(50% + 1.75rem); }
+.peek--left { right: calc(50% + 1.75rem); }
+.peek.is-on { opacity: 1; transform: none; }
+.card:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
 .tl-end { text-align: center; font-size: var(--small); letter-spacing: 0.12em; text-transform: uppercase; padding: 2rem 0 var(--step); }
 
 /* phones: one column, spine on the left, cards in date order */
@@ -100,7 +120,8 @@
   .filters { position: static; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .card, .tl__bar, .card__dots i, .card__body { transition: none; }
+  .card, .tl__bar, .card__dots i, .card__body, .peek, .card__img { transition: none; }
+  .card__img { opacity: 1 !important; transform: none !important; }
   .card__when .live { animation: none; }
 }
 </style>
@@ -147,7 +168,12 @@
    EDIT HERE. Each entry is one card. Months are 1-12.
    Leave out endYear/endMonth and set ongoing: true for current work.
    threads: any of community, design, writing, cooperative,
-            facilitation, personal (the first one sets the card's colour).
+            facilitation, tech, personal (the first one sets the card's colour).
+   when:    optional label to show instead of the years, e.g. 'Summer 2019'.
+   image:   picture shown on hover (computers) or inside the card (phones).
+            Drop a photo into timeline/img/ and put its name here,
+            e.g. image: 'img/reed-graduation.jpg'. Leave it out for no picture.
+   imageAlt: a short description of the picture, for screen readers.
    --------------------------------------------------------------- */
 var THREADS = {
   community:    { label: 'Community & Co-living',     color: '#8B6F4E' },
@@ -155,46 +181,53 @@ var THREADS = {
   writing:      { label: 'Writing & Marketing',       color: '#A0573C' },
   cooperative:  { label: 'Cooperative Models',        color: '#6E5C86' },
   facilitation: { label: 'Facilitation & Leadership', color: '#4F6880' },
+  tech:         { label: 'AI & Technology',           color: '#8A7A3A' },
   personal:     { label: 'Personal',                  color: '#A86F4E' }
 };
 
 var ENTRIES = [
-  { title: 'Reed College', subtitle: 'BA Economics · Economic Sociology Track',
+  { title: 'Reed College', image: 'img/reed.svg', subtitle: 'BA Economics · Economic Sociology Track',
     description: "Studied economics, anthropology, and sociology with a focus on economic sociology. Wrote thesis on Facebook's market structure as an advertising monopsony. Researched digital co-ops, internet culture, and the alt-right.",
     highlight: 'Directed HUM Play — a slapstick comedy tradition about the western canon.',
     threads: ['cooperative', 'writing', 'facilitation'], startYear: 2016, startMonth: 9, endYear: 2020, endMonth: 5 },
-  { title: 'Trusted CMO', subtitle: 'Freelance Copywriter',
+  { title: 'Credit Suisse Labs', image: 'img/credit-suisse.svg', subtitle: 'Business Analyst Intern',
+    description: 'Summer internship working with early machine-learning systems.',
+    threads: ['tech'], startYear: 2019, startMonth: 6, endYear: 2019, endMonth: 8, when: 'Summer 2019' },
+  { title: 'Trusted CMO', image: 'img/trusted-cmo.svg', subtitle: 'Freelance Copywriter',
     description: 'Content and social media marketing. Primary client: Alchemy, an early AI company.',
-    threads: ['writing'], startYear: 2020, startMonth: 3, endYear: 2020, endMonth: 10 },
-  { title: 'The Center SF', subtitle: 'Community Member & Volunteer',
+    threads: ['writing', 'tech'], startYear: 2020, startMonth: 3, endYear: 2020, endMonth: 10 },
+  { title: 'The Center SF', image: 'img/center-sf.svg', subtitle: 'Community Member & Volunteer',
     description: 'Lived at and volunteered with a co-living and teahouse space in San Francisco.',
     threads: ['community', 'cooperative'], startYear: 2020, startMonth: 1, endYear: 2022, endMonth: 6 },
-  { title: 'Handshake.fyi', subtitle: 'Copywriter → Director of Community',
+  { title: 'Handshake.fyi', image: 'img/handshake.svg', subtitle: 'Copywriter → Director of Community',
     description: 'Consulting firm with clients in defense and clean energy. Copywriting, research, and presentation creation. Promoted to Director of Community.',
     threads: ['writing', 'community'], startYear: 2020, startMonth: 6, endYear: 2021, endMonth: 6 },
-  { title: 'UX/UI Fundamentals', subtitle: 'Certificate Course',
+  { title: 'UX/UI Fundamentals', image: 'img/ux.svg', subtitle: 'Certificate Course',
     description: 'Post-graduate coursework in the fundamentals of UX and UI design.',
     threads: ['design'], startYear: 2020, startMonth: 10, endYear: 2021, endMonth: 2 },
-  { title: 'Cabin DAO', subtitle: 'Project Manager & Facilitator',
+  { title: 'Cabin DAO', image: 'img/cabin-dao.svg', subtitle: 'Project Manager & Facilitator',
     description: 'Web3 DAO building co-living in nature for digital nomads. Project managed products including Stamps, a tokenized reputation system. Coordinated designers.',
     highlight: 'Facilitated multiple in-person co-living retreats in nature.',
     threads: ['community', 'facilitation', 'design'], startYear: 2021, startMonth: 6, endYear: 2023, endMonth: 6 },
-  { title: 'Matrescence', subtitle: 'Becoming a mother',
+  { title: 'Elkenmist', image: 'img/elkenmist.svg', subtitle: 'Regenerative Community Farm · Skamokawa, WA',
+    description: "Lived and worked on a regenerative community farm, and represented it at the West Wahkiakum Farmers' Market.",
+    threads: ['community', 'cooperative'], startYear: 2023, startMonth: 9, endYear: 2025, endMonth: 5, when: 'Fall 2023–Spring 2025' },
+  { title: 'Matrescence', image: 'img/matrescence.svg', subtitle: 'Becoming a mother',
     description: 'Welcomed son Arthur into the world. A period of profound transformation — navigating the identity shift of new parenthood while deepening commitments to cooperative childcare, community, and family life.',
     threads: ['personal', 'cooperative'], startYear: 2023, startMonth: 12, endYear: 2024, endMonth: 12 },
-  { title: 'The Fold', subtitle: 'Membership Manager',
+  { title: 'The Fold', image: 'img/the-fold.svg', subtitle: 'Membership Manager',
     description: "Community workspace in San Francisco's Mission District. Developed the Foresight Institute partnership, operational infrastructure, member agreements, and community programming.",
     threads: ['community', 'cooperative', 'facilitation'], startYear: 2024, startMonth: 11, endYear: 2026, endMonth: 9 },
-  { title: 'Puddle Jumpers', subtitle: 'Marketing Coordinator · Parent Co-op',
+  { title: 'Puddle Jumpers', image: 'img/puddle-jumpers.svg', subtitle: 'Marketing Coordinator · Parent Co-op',
     description: 'Marketing coordinator for a parent cooperative daycare, through its closing in June 2026.',
     threads: ['cooperative', 'community', 'writing'], startYear: 2024, startMonth: 6, endYear: 2026, endMonth: 6 },
-  { title: 'Jubilee Studio', subtitle: 'Co-founder · Designer',
+  { title: 'Jubilee Studio', image: 'img/jubilee-studio.svg', subtitle: 'Co-founder · Designer',
     description: 'Design studio co-founded with Calvin, embracing design as a broad discipline — from UI and digital products to experience design, events, and physical spaces. Projects include the jubil.ee digital cookbook, a searchable small-batch goods widget, and creative direction for community gatherings.',
     threads: ['design', 'community'], startYear: 2025, startMonth: 1, ongoing: true },
-  { title: 'Edge Esmeralda', subtitle: 'Family Co-living Pop-up',
+  { title: 'Edge Esmeralda', image: 'img/edge-esmeralda.svg', subtitle: 'Family Co-living Pop-up',
     description: 'Created a family-friendly co-living pop-up house — 4 families with children plus singles, roughly 7–8 people total.',
     threads: ['community', 'cooperative'], startYear: 2025, startMonth: 6, endYear: 2025, endMonth: 8 },
-  { title: 'Authentic Revolution', subtitle: 'The Authentic Facilitator Training',
+  { title: 'Authentic Revolution', image: 'img/authentic-revolution.svg', subtitle: 'The Authentic Facilitator Training',
     description: 'Intensive facilitation training in the art and science of Authentic Relating. Learning to design and lead transformative events — from corporate workshops to intimate gatherings — with a focus on connection design, ethical use of power, group dynamics, and conflict navigation.',
     threads: ['facilitation'], startYear: 2025, startMonth: 9, endYear: 2026, endMonth: 6 }
 ];
@@ -217,6 +250,7 @@ var ENTRIES = [
   function end(e) { return e.ongoing ? NOW_FRAC : frac(e.endYear, e.endMonth); }
   function yPos(f) { return (f - MIN_YEAR) * PX_PER_YEAR; }
   function range(e) {
+    if (e.when) return e.when;
     if (e.ongoing) return e.startYear + '–present';
     return e.startYear === e.endYear ? String(e.startYear) : e.startYear + '–' + e.endYear;
   }
@@ -263,6 +297,7 @@ var ENTRIES = [
       '<span class="card__tick" aria-hidden="true"></span>' +
       '<span class="card__dots" aria-hidden="true">' + e.threads.map(function (t) { return '<i style="--c:' + THREADS[t].color + '"></i>'; }).join('') + '</span>' +
       '<div class="card__body">' +
+        (e.image ? '<figure class="card__img"><img src="' + esc(e.image) + '" alt="' + esc(e.imageAlt || '') + '" width="320" height="240" loading="lazy"></figure>' : '') +
         '<p class="card__when">' + range(e) + (e.ongoing ? '<span class="live" aria-label="ongoing"></span>' : '') + '</p>' +
         '<h2>' + esc(e.title) + '</h2>' +
         '<p class="card__sub">' + esc(e.subtitle) + '</p>' +
@@ -270,11 +305,45 @@ var ENTRIES = [
         (e.highlight ? '<p class="card__hi">' + esc(e.highlight) + '</p>' : '') +
         '<div class="card__tags">' + e.threads.map(function (t) { return '<span><i style="--c:' + THREADS[t].color + '"></i>' + esc(THREADS[t].label) + '</span>'; }).join('') + '</div>' +
       '</div>';
-    card.addEventListener('mouseenter', function () { setHot(e.threads[0]); });
-    card.addEventListener('mouseleave', function () { setHot(null); });
+    card.tabIndex = 0;
+    card.addEventListener('mouseenter', function () { setHot(e.threads[0]); showPeek(e); });
+    card.addEventListener('mouseleave', function () { setHot(null); hidePeek(); });
+    card.addEventListener('focus', function () { setHot(e.threads[0]); showPeek(e); });
+    card.addEventListener('blur', function () { setHot(null); hidePeek(); });
     tl.appendChild(card);
     e._card = card; e._bar = bar;
   });
+
+  // On computers, a card's picture appears on the other side of the spine while
+  // you hover (or tab to) the card. On touch screens it lives inside the card instead.
+  var hoverable = window.matchMedia('(hover: hover) and (min-width: 44.01rem)');
+  var peek = document.createElement('figure');
+  peek.className = 'peek'; peek.setAttribute('aria-hidden', 'true');
+  peek.innerHTML = '<img alt="" width="320" height="240">';
+  tl.appendChild(peek);
+  var peekImg = peek.querySelector('img');
+  function showPeek(e) {
+    if (!e.image || !hoverable.matches) return;
+    var card = e._card;
+    peekImg.src = e.image;
+    peek.style.setProperty('--c', THREADS[e.threads[0]].color);
+    peek.classList.toggle('peek--right', card.classList.contains('card--left'));
+    peek.classList.toggle('peek--left', card.classList.contains('card--right'));
+    var top = card.offsetTop;
+    var max = tl.offsetHeight - peek.offsetHeight;
+    peek.style.top = Math.max(0, Math.min(top, max)) + 'px';
+    peek.classList.add('is-on');
+  }
+  function hidePeek() { peek.classList.remove('is-on'); }
+
+  if ('IntersectionObserver' in window) {
+    var seen = new IntersectionObserver(function (list) {
+      list.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-seen'); seen.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    tl.querySelectorAll('.card__img').forEach(function (f) { seen.observe(f); });
+  } else {
+    tl.querySelectorAll('.card__img').forEach(function (f) { f.classList.add('is-seen'); });
+  }
 
   // Place cards beside the spine. Each card sits as close to its start date as it
   // can without overlapping the card above it, on whichever side lets it sit closer.
